@@ -1,0 +1,14 @@
+# Arquivos temporários e do sistema
+.DS_Store
+Thumbs.db
+*.tmp
+*.log
+*.swp
+
+# Pacotes compactados e binários que não fazem parte do site
+*.rar
+*.zip
+*.7z
+
+# Dependências locais
+node_modules/

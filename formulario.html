@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato - Guilherme Freitas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+        <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">GF Portfólio</a>
+
+            <button class="btn-menu" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="menu-principal">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="curriculo.html">Currículo</a></li>
+                    <li><a href="formulario.html">Contato</a></li>
+                    <li><a href="multimidia.html">Multimídia</a></li>
+                    <li><a href="graficos.html">Gráficos</a></li>
+                    <li><a href="contato.html">Redes para contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Formulário de Contato</h1>
+
+        <section class="formulario-container">
+            <article>
+                <p>Preencha o formulário abaixo e entrarei em contato assim que possível.</p>
+
+                <form action="#" method="post">
+
+                    <!-- Nome -->
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+
+                    <!-- E-mail -->
+                    <div class="form-group">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <!-- Telefone -->
+                    <div class="form-group">
+                        <label for="telefone">Telefone</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999">
+                    </div>
+
+                    <!-- Data -->
+                    <div class="form-group">
+                        <label for="data">Melhor data para contato</label>
+                        <input type="date" id="data" name="data">
+                    </div>
+
+                    <!-- Assunto -->
+                    <div class="form-group">
+                        <label for="assunto">Assunto *</label>
+                        <select id="assunto" name="assunto" required>
+                            <option value="">Selecione um assunto</option>
+                            <option value="oportunidade">Oportunidade de Trabalho</option>
+                            <option value="projeto">Proposta de Projeto</option>
+                            <option value="feedback">Feedback / Sugestão</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <!-- Como conheceu -->
+                    <div class="form-group">
+                        <label>Como você me conheceu? *</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="origem" value="linkedin" required> LinkedIn
+                            </label>
+                            <label>
+                                <input type="radio" name="origem" value="github"> GitHub
+                            </label>
+                            <label>
+                                <input type="radio" name="origem" value="indicacao"> Indicação
+                            </label>
+                            <label>
+                                <input type="radio" name="origem" value="outro"> Outro
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Interesses (checkbox) -->
+                    <div class="form-group">
+                        <label>Área de interesse</label>
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="interesse" value="web"> Desenvolvimento Web
+                            </label>
+                            <label>
+                                <input type="checkbox" name="interesse" value="dados"> Análise de Dados
+                            </label>
+                            <label>
+                                <input type="checkbox" name="interesse" value="sistemas"> Análise de Sistemas
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Mensagem -->
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem *</label>
+                        <textarea id="mensagem" name="mensagem" rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-enviar">Enviar Mensagem</button>
+                </form>
+            </article>
+        </section>
+    </main>
+
+    <footer>
+        <p>Guilherme Freitas &mdash; Portfólio Acadêmico &copy; 2025</p>
+    </footer>
+    <script>
+        (function () {
+            var btn = document.querySelector('.btn-menu');
+            var nav = document.getElementById('menu-principal');
+            if (!btn || !nav) return;
+
+            btn.addEventListener('click', function () {
+                var aberto = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!aberto));
+                nav.classList.toggle('aberto', !aberto);
+            });
+
+            nav.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    btn.setAttribute('aria-expanded', 'false');
+                    nav.classList.remove('aberto');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

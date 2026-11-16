@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficos - Guilherme Freitas</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+        <header>
+        <div class="header-inner">
+            <a href="index.html" class="logo">GF Portfólio</a>
+
+            <button class="btn-menu" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="menu-principal">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="curriculo.html">Currículo</a></li>
+                    <li><a href="formulario.html">Contato</a></li>
+                    <li><a href="multimidia.html">Multimídia</a></li>
+                    <li><a href="graficos.html">Gráficos</a></li>
+                    <li><a href="contato.html">Redes para contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <h1>Gráficos e Visualizações</h1>
+
+        <!-- Canvas -->
+        <section class="canvas-section">
+            <h2>Gráfico com Canvas</h2>
+            <article>
+                <p>Progresso estimado nas habilidades técnicas:</p>
+                <div class="canvas-wrapper">
+                    <canvas id="meuCanvas" width="500" height="300"></canvas>
+                </div>
+            </article>
+        </section>
+
+        <!-- SVG -->
+        <section class="svg-section">
+            <h2>Gráfico com SVG</h2>
+            <article>
+                <p>Representação visual das tecnologias que utilizo:</p>
+                <svg class="grafico-svg" viewBox="0 0 500 200"
+                     xmlns="http://www.w3.org/2000/svg"
+                     role="img" aria-label="Gráfico de habilidades em SVG"
+                     style="max-width:100%; height:auto; display:block;">
+
+                    <!-- HTML -->
+                    <circle cx="80"  cy="100" r="50" fill="#05219b" opacity="0.85"/>
+                    <text x="80"  y="105" text-anchor="middle" fill="white" font-size="14" font-family="Arial">HTML</text>
+
+                    <!-- CSS -->
+                    <circle cx="200" cy="100" r="42" fill="#f30000" opacity="0.85"/>
+                    <text x="200" y="105" text-anchor="middle" fill="white" font-size="14" font-family="Arial">CSS</text>
+
+                    <!-- JS -->
+                    <circle cx="310" cy="100" r="34" fill="#141414" opacity="0.85"/>
+                    <text x="310" y="105" text-anchor="middle" fill="white" font-size="13" font-family="Arial">JS</text>
+
+                    <!-- Python -->
+                    <circle cx="405" cy="100" r="28" fill="#05219b" opacity="0.6"/>
+                    <text x="405" y="105" text-anchor="middle" fill="white" font-size="12" font-family="Arial">Python</text>
+                </svg>
+                <p><small>Tamanho dos círculos representa o nível de experiência relativo.</small></p>
+            </article>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Guilherme Freitas &mdash; Portfólio Acadêmico &copy; 2025</p>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('meuCanvas');
+        const ctx    = canvas.getContext('2d');
+
+        const dados = [
+            { nome: 'HTML',       valor: 65, cor: '#05219b' },
+            { nome: 'CSS',        valor: 50, cor: '#f30000' },
+            { nome: 'JavaScript', valor: 30, cor: '#141414' },
+            { nome: 'Python',     valor: 45, cor: '#444' },
+            { nome: 'Power BI',   valor: 40, cor: '#05219b' }
+        ];
+
+        const total        = dados.length;
+        const larguraUtil  = canvas.width - 40;
+        const larguraBarra = Math.floor(larguraUtil / total) - 8;
+        const alturaMaxima = 220;
+        const baseY        = 255;
+        let posX           = 30;
+
+        dados.forEach(function(item) {
+            const altura = (item.valor / 100) * alturaMaxima;
+
+            ctx.fillStyle = item.cor;
+            ctx.fillRect(posX, baseY - altura, larguraBarra, altura);
+
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth   = 1;
+            ctx.strokeRect(posX, baseY - altura, larguraBarra, altura);
+
+            ctx.fillStyle  = '#333';
+            ctx.font       = 'bold 12px Arial';
+            ctx.textAlign  = 'center';
+            ctx.fillText(item.valor + '%', posX + larguraBarra / 2, baseY - altura - 5);
+
+            ctx.font = '11px Arial';
+            ctx.fillText(item.nome, posX + larguraBarra / 2, baseY + 15);
+
+            posX += larguraBarra + 8;
+        });
+
+        /* Eixos */
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth   = 2;
+        ctx.beginPath();
+        ctx.moveTo(20, 10);
+        ctx.lineTo(20, baseY);
+        ctx.lineTo(canvas.width - 10, baseY);
+        ctx.stroke();
+
+        ctx.fillStyle = '#666';
+        ctx.font      = '9px Arial';
+        ctx.textAlign = 'right';
+        for (let i = 0; i <= 100; i += 20) {
+            const y = baseY - (i / 100) * alturaMaxima;
+            ctx.fillText(i + '%', 18, y + 3);
+            ctx.strokeStyle = '#eee';
+            ctx.lineWidth   = 1;
+            ctx.beginPath();
+            ctx.moveTo(22, y);
+            ctx.lineTo(canvas.width - 10, y);
+            ctx.stroke();
+        }
+    </script>
+    <script>
+        (function () {
+            var btn = document.querySelector('.btn-menu');
+            var nav = document.getElementById('menu-principal');
+            if (!btn || !nav) return;
+
+            btn.addEventListener('click', function () {
+                var aberto = btn.getAttribute('aria-expanded') === 'true';
+                btn.setAttribute('aria-expanded', String(!aberto));
+                nav.classList.toggle('aberto', !aberto);
+            });
+
+            nav.querySelectorAll('a').forEach(function (link) {
+                link.addEventListener('click', function () {
+                    btn.setAttribute('aria-expanded', 'false');
+                    nav.classList.remove('aberto');
+                });
+            });
+        })();
+    </script>
+</body>
+</html>
