@@ -1,17 +1,22 @@
 /* ========================================
-   PORTFÓLIO — CP2
-   Mobile-first | Flexbox | Grid | Responsivo
+   PORTFÓLIO — CP4 (versão final)
+   Mobile-first | Flexbox | Grid | Bootstrap 5 | Acessibilidade
+   Ordem de carregamento: Bootstrap -> este arquivo (sobrescreve o que for preciso)
    ======================================== */
 
 /* ===== VARIÁVEIS ===== */
 :root {
+    /* Cores de marca (decorativas) */
     --cor-primaria:    #39e5f1;
     --cor-secundaria:  #0098fd;
-    --cor-terciaria:   #023af1;
+    /* Cores com contraste AA (>= 4.5:1 com texto branco ou sobre fundo claro) */
+    --cor-terciaria:   #023af1;   /* 7.3:1 com branco */
+    --cor-escura:      #05219b;   /* 11:1 com branco  */
     --cor-texto:       #030003;
     --cor-fundo:       #fdfdfd;
     --cor-fundo-claro: #ffffff;
-    --cor-borda:       #ddd;
+    --cor-borda:       #767676;   /* 4.5:1 sobre branco (bordas de campos) */
+    --cor-foco:        #ffbf47;   /* contorno de foco visível */
 
     --fonte-titulo: 'Arial', sans-serif;
     --fonte-corpo:  'Arial', sans-serif;
@@ -40,9 +45,36 @@ body {
     line-height: 1.6;
 }
 
+/* ===== ACESSIBILIDADE ===== */
+
+/* Foco sempre visível para navegação por teclado */
+:focus-visible {
+    outline: 3px solid var(--cor-foco);
+    outline-offset: 2px;
+}
+
+/* Link "Pular para o conteúdo": escondido até receber foco */
+.skip-link {
+    position: absolute;
+    left: 12px;
+    top: -60px;
+    z-index: 200;
+    background: var(--cor-escura);
+    color: #ffffff;
+    padding: 10px 16px;
+    border-radius: var(--raio-borda);
+    font-weight: bold;
+    text-decoration: none;
+    transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+    top: 12px;
+}
+
 /* ===== HEADER — Flexbox, mobile-first ===== */
 header {
-    background-color: var(--cor-primaria);
+    background-color: var(--cor-terciaria);
     padding: 0 var(--espacamento);
     position: sticky;
     top: 0;
@@ -79,6 +111,9 @@ header {
     cursor: pointer;
     padding: 8px;
     border-radius: var(--raio-borda);
+    min-width: 44px;         /* área de toque confortável */
+    min-height: 44px;
+    align-items: center;
 }
 
 .btn-menu span {
@@ -117,11 +152,12 @@ nav ul {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    margin-left: 0;
 }
 
 nav a {
     display: block;
-    color: var(--cor-fundo);
+    color: #ffffff;
     text-decoration: none;
     font-weight: bold;
     padding: 10px 14px;
@@ -129,10 +165,15 @@ nav a {
     transition: background-color 0.2s ease;
 }
 
-nav a:hover,
-nav a:focus {
-    background-color: var(--cor-terciaria);
-    outline: none;
+nav a:hover {
+    background-color: var(--cor-escura);
+}
+
+/* Página atual destacada (não depende só de cor) */
+nav a[aria-current="page"] {
+    background-color: var(--cor-escura);
+    text-decoration: underline;
+    text-underline-offset: 4px;
 }
 
 /* ===== MAIN ===== */
@@ -145,7 +186,7 @@ main {
 main > h1 {
     font-size: 1.8em;
     margin-bottom: 28px;
-    color: var(--cor-primaria);
+    color: var(--cor-terciaria);
     text-align: center;
 }
 
@@ -160,7 +201,7 @@ section {
 
 section h2 {
     font-size: 1.4em;
-    color: var(--cor-primaria);
+    color: var(--cor-escura);
     margin-bottom: 16px;
     font-family: var(--fonte-titulo);
 }
@@ -171,15 +212,15 @@ article {
 
 article p {
     margin-bottom: 14px;
-    text-align: justify;
+    text-align: left;        /* justificado prejudica a leitura */
     max-width: 70ch;
 }
 
 /* ===== HERO (index.html) — Flexbox ===== */
 .hero {
     text-align: center;
-    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
-    color: white;
+    background: linear-gradient(135deg, var(--cor-escura), var(--cor-terciaria));
+    color: #ffffff;
     border-left: none;
     border-radius: var(--raio-borda);
 }
@@ -193,27 +234,22 @@ article p {
 }
 
 .about img {
-    width: 130px;
-    height: 130px;
-    border-radius: 50%;
-    border: 4px solid white;
+    border: 4px solid #ffffff;
     object-fit: cover;
-    /* Responsivo */
-    max-width: 100%;
-    height: auto;
-    /* Sobrescreve o height: auto só para imagens circulares */
+    /* Responsivo: largura fixa só para o tamanho do avatar */
     width: 130px;
     height: 130px;
+    max-width: 100%;
 }
 
 .about h1 {
     font-size: 2em;
     line-height: 1.2;
+    color: #ffffff;
 }
 
 .subtitulo {
     font-size: 1.1em;
-    opacity: 0.9;
 }
 
 /* ===== LISTAS ===== */
@@ -239,15 +275,15 @@ table {
 }
 
 table thead {
-    background-color: var(--cor-primaria);
-    color: white;
+    background-color: var(--cor-escura);
+    color: #ffffff;
 }
 
 table th,
 table td {
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid var(--cor-borda);
+    border-bottom: 1px solid #ddd;
 }
 
 table tbody tr:hover {
@@ -255,7 +291,8 @@ table tbody tr:hover {
 }
 
 /* Tabela rolável em mobile */
-.tabela-wrapper {
+.tabela-wrapper,
+.table-responsive {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     border-radius: var(--raio-borda);
@@ -280,12 +317,16 @@ table tbody tr:hover {
     margin-bottom: 18px;
     display: flex;
     flex-direction: column;
+    border: none;           /* fieldset */
+    padding: 0;
+    min-width: 0;
 }
 
-label {
+label,
+legend {
     font-weight: bold;
     margin-bottom: 5px;
-    color: var(--cor-primaria);
+    color: var(--cor-texto);
 }
 
 input[type="text"],
@@ -309,9 +350,25 @@ input[type="tel"]:focus,
 input[type="date"]:focus,
 select:focus,
 textarea:focus {
-    outline: none;
-    border-color: var(--cor-primaria);
-    box-shadow: 0 0 4px rgba(5, 33, 155, 0.25);
+    border-color: var(--cor-escura);
+    box-shadow: 0 0 0 3px rgba(2, 58, 241, 0.25);
+}
+
+/* Campo com erro: borda vermelha com contraste suficiente */
+.is-invalid {
+    border-color: #b00020 !important;
+}
+
+.invalid-feedback {
+    color: #b00020;
+    font-weight: bold;
+    font-size: 0.95em;
+    margin-top: 4px;
+}
+
+.form-text {
+    font-size: 0.9em;
+    margin-top: 4px;
 }
 
 .radio-group,
@@ -322,40 +379,50 @@ textarea:focus {
     margin-top: 8px;
 }
 
-.radio-group label,
-.checkbox-group label {
+.radio-group .form-check,
+.checkbox-group .form-check {
     display: flex;
     align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding-left: 0;
+}
+
+.radio-group input,
+.checkbox-group input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.radio-group label,
+.checkbox-group label {
     font-weight: normal;
     margin-bottom: 0;
     cursor: pointer;
 }
 
-.radio-group input,
-.checkbox-group input {
-    margin-right: 10px;
-    width: 18px;
-    height: 18px;
-    cursor: pointer;
-}
-
-.btn-enviar {
-    background-color: var(--cor-primaria);
-    color: white;
+.btn-enviar,
+.btn-limpar {
     padding: 12px 30px;
-    border: none;
     border-radius: var(--raio-borda);
     font-size: 1em;
     font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.25s ease;
     width: 100%;
+    transition: background-color 0.25s ease;
 }
 
-.btn-enviar:hover,
-.btn-enviar:focus {
+.btn-enviar {
     background-color: var(--cor-terciaria);
-    outline: none;
+    border-color: var(--cor-terciaria);
+    color: #ffffff;
+}
+
+.btn-enviar:hover {
+    background-color: var(--cor-escura);
+    border-color: var(--cor-escura);
 }
 
 /* ===== MULTIMÍDIA — mídias responsivas ===== */
@@ -398,8 +465,8 @@ canvas {
 
 /* ===== FOOTER ===== */
 footer {
-    background-color: var(--cor-primaria);
-    color: white;
+    background-color: var(--cor-terciaria);
+    color: #ffffff;
     text-align: center;
     padding: 28px var(--espacamento);
     margin-top: 60px;
@@ -410,21 +477,29 @@ footer {
     transition: r 0.3s ease;
 }
 
+/* Reduz animações para quem pede movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
 /* ============================================
    MEDIA QUERIES — min-width (mobile-first)
    ============================================ */
 
-/* ============================================
-   >= 768px — Tablet / Desktop
-   Nav inline, hamburguer some
-   ============================================ */
+/* >= 768px — Tablet / Desktop: nav inline, hambúrguer some */
 @media (min-width: 768px) {
-    /* Hamburguer: esconde */
     .btn-menu {
         display: none;
     }
 
-    /* Nav: sempre visível, inline */
     nav {
         display: block !important;  /* sobrescreve .aberto e JS */
         width: auto;
@@ -438,7 +513,6 @@ footer {
         align-items: center;
     }
 
-    /* Header: logo à esquerda, links à direita */
     .header-inner {
         gap: 24px;
     }
@@ -461,9 +535,7 @@ footer {
     }
 }
 
-/* ============================================
-   >= 1024px — Desktop largo
-   ============================================ */
+/* >= 1024px — Desktop largo */
 @media (min-width: 1024px) {
     nav ul {
         gap: 8px;
